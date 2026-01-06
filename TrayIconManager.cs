@@ -22,9 +22,35 @@ public class TrayIconManager : IDisposable
     
     private void InitializeTrayIcon()
     {
+        // 尝试加载自定义图标，如果失败则使用系统默认图标
+        System.Drawing.Icon? customIcon = null;
+        try
+        {
+            // 尝试多个可能的路径
+            var paths = new[]
+            {
+                System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "logo.ico"),
+                System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Resources", "logo.ico"),
+                "Resources\\logo.ico"
+            };
+            
+            foreach (var iconPath in paths)
+            {
+                if (System.IO.File.Exists(iconPath))
+                {
+                    customIcon = new System.Drawing.Icon(iconPath);
+                    break;
+                }
+            }
+        }
+        catch
+        {
+            // 如果加载失败，使用系统默认图标
+        }
+        
         _notifyIcon = new NotifyIcon
         {
-            Icon = System.Drawing.SystemIcons.Application,
+            Icon = customIcon ?? System.Drawing.SystemIcons.Application,
             Text = "FPS 瞄准训练器",
             Visible = true
         };

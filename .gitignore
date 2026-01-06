@@ -414,3 +414,5 @@ $RECYCLE.BIN/
 # Keep resource files for localization
 !Resources/*.resx
 
+**/bin/**
+*.sln

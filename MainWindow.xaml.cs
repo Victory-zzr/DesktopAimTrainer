@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 
 namespace DesktopAimTrainer;
 
@@ -11,12 +13,171 @@ public partial class MainWindow : Window
     private TrainingConfig _lastConfig = new();
     private TrainingResult? _lastResult;
     
+    private HwndSource? _hwndSource;
+    private uint _showWindowMessage;
+    
     public MainWindow()
     {
         InitializeComponent();
+        
+        // 设置窗口图标
+        SetWindowIcon();
+        
         LocalizationManager.Initialize();
         LocalizationManager.LanguageChanged += LocalizationManager_LanguageChanged;
         UpdateUI();
+        
+        // 注册窗口消息处理
+        SourceInitialized += MainWindow_SourceInitialized;
+    }
+    
+    private void MainWindow_SourceInitialized(object? sender, EventArgs e)
+    {
+        // 获取窗口句柄并注册消息处理
+        var helper = new WindowInteropHelper(this);
+        helper.EnsureHandle();
+        IntPtr hwnd = helper.Handle;
+        _hwndSource = HwndSource.FromHwnd(hwnd);
+        
+        if (_hwndSource != null)
+        {
+            // 注册自定义消息（必须在两个进程中注册相同的消息名称才能匹配）
+            _showWindowMessage = Win32Api.RegisterWindowMessage("DesktopAimTrainer_ShowWindow");
+            _hwndSource.AddHook(WndProc);
+            DebugLogger.WriteLine($"窗口消息处理已注册，消息ID: {_showWindowMessage}, 窗口句柄: {hwnd}, 进程ID: {System.Diagnostics.Process.GetCurrentProcess().Id}");
+        }
+        else
+        {
+            DebugLogger.WriteError($"无法获取 HwndSource，窗口句柄: {hwnd}");
+        }
+    }
+    
+    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        // 处理显示窗口消息
+#if DEBUG
+        // Debug 版本记录所有消息
+        DebugLogger.WriteLine($"WndProc 收到消息: msg={msg}, _showWindowMessage={_showWindowMessage}, hwnd={hwnd}");
+#endif
+        
+        if (_showWindowMessage != 0 && msg == _showWindowMessage)
+        {
+            DebugLogger.WriteLine($"收到显示窗口消息，当前窗口状态 - IsVisible: {IsVisible}, ShowInTaskbar: {ShowInTaskbar}, WindowState: {WindowState}");
+            
+            try
+            {
+                // 检查是否在 UI 线程上
+                if (Dispatcher.CheckAccess())
+                {
+                    // 已经在 UI 线程上，直接执行
+                    DebugLogger.WriteLine("在 UI 线程上，直接调用 ShowWindowInternal");
+                    ShowWindowInternal();
+                }
+                else
+                {
+                    // 不在 UI 线程上，使用 BeginInvoke 异步执行
+                    DebugLogger.WriteLine("不在 UI 线程上，使用 BeginInvoke");
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        ShowWindowInternal();
+                    }), System.Windows.Threading.DispatcherPriority.Normal);
+                }
+            }
+            catch (Exception ex)
+            {
+                DebugLogger.WriteError("处理显示窗口消息失败", ex);
+            }
+            
+            handled = true;
+            return new IntPtr(1); // 返回非零值表示消息已处理
+        }
+        
+        return IntPtr.Zero;
+    }
+    
+    private void ShowWindowInternal()
+    {
+        try
+        {
+            DebugLogger.WriteLine($"开始显示窗口... 当前状态 - IsVisible: {IsVisible}, ShowInTaskbar: {ShowInTaskbar}, WindowState: {WindowState}, Width: {Width}, Height: {Height}");
+            
+            // 确保窗口大小正确（防止显示为巨大窗口）
+            if (Width <= 0 || Height <= 0 || Width > 2000 || Height > 2000)
+            {
+                DebugLogger.WriteLine($"窗口大小异常，重置为默认大小 - Width: {Width}, Height: {Height}");
+                Width = 400;
+                Height = 500;
+            }
+            
+            // 确保窗口完全显示
+            if (!IsVisible)
+            {
+                Show();
+            }
+            
+            WindowState = WindowState.Normal;
+            ShowInTaskbar = true;
+            
+            // 确保窗口位置合理（如果窗口位置异常，居中显示）
+            if (Left < -1000 || Top < -1000 || Left > SystemParameters.VirtualScreenWidth || Top > SystemParameters.VirtualScreenHeight)
+            {
+                DebugLogger.WriteLine($"窗口位置异常，重置为居中 - Left: {Left}, Top: {Top}");
+                WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
+            
+            Activate();
+            Focus();
+            BringIntoView();
+            
+            DebugLogger.WriteLine($"窗口显示完成 - IsVisible: {IsVisible}, ShowInTaskbar: {ShowInTaskbar}, WindowState: {WindowState}, Width: {Width}, Height: {Height}, Left: {Left}, Top: {Top}");
+        }
+        catch (Exception ex)
+        {
+            DebugLogger.WriteError("显示窗口失败", ex);
+        }
+    }
+    
+    private void SetWindowIcon()
+    {
+        try
+        {
+            // 尝试加载自定义图标
+            var iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "logo.ico");
+            if (!System.IO.File.Exists(iconPath))
+            {
+                iconPath = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Resources", "logo.ico");
+            }
+            
+            if (System.IO.File.Exists(iconPath))
+            {
+                using (var stream = System.IO.File.OpenRead(iconPath))
+                {
+                    var icon = new System.Drawing.Icon(stream);
+                    var bitmap = System.Drawing.Icon.FromHandle(icon.Handle).ToBitmap();
+                    var hBitmap = bitmap.GetHbitmap();
+                    try
+                    {
+                        var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
+                            hBitmap,
+                            IntPtr.Zero,
+                            Int32Rect.Empty,
+                            BitmapSizeOptions.FromEmptyOptions());
+                        bitmapSource.Freeze();
+                        Icon = bitmapSource;
+                    }
+                    finally
+                    {
+                        Win32Api.DeleteObject(hBitmap);
+                        bitmap.Dispose();
+                        icon.Dispose();
+                    }
+                }
+            }
+        }
+        catch
+        {
+            // 如果加载失败，使用默认图标（不设置，使用系统默认）
+        }
     }
     
     private void LocalizationManager_LanguageChanged(object? sender, EventArgs e)
@@ -166,8 +327,8 @@ public partial class MainWindow : Window
         _currentSession = new TrainingSession(config);
         _currentSession.TrainingCompleted += Session_TrainingCompleted;
         
-        // 最小化窗口到托盘
-        WindowState = WindowState.Minimized;
+        // 完全隐藏窗口到托盘
+        Hide();
         ShowInTaskbar = false;
         
         _currentSession.Start();
@@ -203,9 +364,11 @@ public partial class MainWindow : Window
             });
         }
         
+        Show(); // 先显示窗口（如果被隐藏）
         WindowState = WindowState.Normal;
         ShowInTaskbar = true;
         Activate();
+        Focus();
     }
     
     private void UpdateStatsDisplay(TrainingResult result)

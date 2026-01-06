@@ -86,6 +86,57 @@ public static class Win32Api
     public const int SM_CXICON = 11;
     public const int SM_CYICON = 12;
     
+    // Window activation APIs
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    
+    [DllImport("user32.dll")]
+    public static extern bool SetForegroundWindow(IntPtr hWnd);
+    
+    [DllImport("user32.dll")]
+    public static extern bool BringWindowToTop(IntPtr hWnd);
+    
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern IntPtr FindWindow(string? lpClassName, string? lpWindowName);
+    
+    [DllImport("user32.dll")]
+    public static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
+    
+    [DllImport("user32.dll")]
+    public static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
+    
+    [DllImport("user32.dll")]
+    public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+    
+    [DllImport("user32.dll")]
+    public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+    
+    [DllImport("user32.dll")]
+    public static extern uint RegisterWindowMessage(string lpString);
+    
+    [DllImport("user32.dll")]
+    public static extern bool IsWindowVisible(IntPtr hWnd);
+    
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
+    
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern int GetClassName(IntPtr hWnd, System.Text.StringBuilder lpClassName, int nMaxCount);
+    
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetParent(IntPtr hWnd);
+    
+    [DllImport("user32.dll")]
+    public static extern bool AllowSetForegroundWindow(int dwProcessId);
+    
+    public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+    
+    public const int SW_RESTORE = 9;
+    public const int SW_SHOW = 5;
+    public const int SW_SHOWNORMAL = 1;
+    public const int SW_SHOWNOACTIVATE = 4;
+    public const uint WM_USER = 0x0400;
+    
     // Shell API for getting system icons
     [DllImport("shell32.dll", CharSet = CharSet.Auto)]
     public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbSizeFileInfo, uint uFlags);
@@ -149,6 +200,9 @@ public static class Win32Api
     
     [DllImport("user32.dll")]
     public static extern bool DestroyIcon(IntPtr hIcon);
+    
+    [DllImport("gdi32.dll")]
+    public static extern bool DeleteObject(IntPtr hObject);
     
     #endregion
     
