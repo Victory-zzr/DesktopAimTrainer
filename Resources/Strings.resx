@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="WindowTitle" xml:space="preserve">
+    <value>FPS 瞄准训练器</value>
+  </data>
+  <data name="TrainingConfig" xml:space="preserve">
+    <value>训练配置</value>
+  </data>
+  <data name="IconType" xml:space="preserve">
+    <value>图标类型:</value>
+  </data>
+  <data name="RecycleBin" xml:space="preserve">
+    <value>回收站</value>
+  </data>
+  <data name="NewFolder" xml:space="preserve">
+    <value>新建文件夹</value>
+  </data>
+  <data name="Excel" xml:space="preserve">
+    <value>Excel文档</value>
+  </data>
+  <data name="Word" xml:space="preserve">
+    <value>Word文档</value>
+  </data>
+  <data name="TextDocument" xml:space="preserve">
+    <value>文本文档</value>
+  </data>
+  <data name="TrainingMode" xml:space="preserve">
+    <value>训练模式:</value>
+  </data>
+  <data name="CountMode" xml:space="preserve">
+    <value>按量训练</value>
+  </data>
+  <data name="TimeMode" xml:space="preserve">
+    <value>按时间训练</value>
+  </data>
+  <data name="TargetHitCount" xml:space="preserve">
+    <value>目标命中数量:</value>
+  </data>
+  <data name="TotalDuration" xml:space="preserve">
+    <value>训练总时长（秒）:</value>
+  </data>
+  <data name="TargetStayTime" xml:space="preserve">
+    <value>单个靶子停留时间（毫秒）:</value>
+  </data>
+  <data name="StartTraining" xml:space="preserve">
+    <value>开始训练</value>
+  </data>
+  <data name="TrainingStats" xml:space="preserve">
+    <value>训练统计</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>暂无训练数据</value>
+  </data>
+  <data name="Hotkeys" xml:space="preserve">
+    <value>快捷键: ESC-终止训练  F7-快速开始  F6-查看结果</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言:</value>
+  </data>
+  <data name="Chinese" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Hits" xml:space="preserve">
+    <value>命中数:</value>
+  </data>
+  <data name="Misses" xml:space="preserve">
+    <value>Miss数:</value>
+  </data>
+  <data name="HitRate" xml:space="preserve">
+    <value>命中率:</value>
+  </data>
+  <data name="TotalTime" xml:space="preserve">
+    <value>总耗时:</value>
+  </data>
+  <data name="AverageTime" xml:space="preserve">
+    <value>平均单靶耗时:</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="InvalidInput" xml:space="preserve">
+    <value>请检查输入参数是否有效</value>
+  </data>
+</root>
+

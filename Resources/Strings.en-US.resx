@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="WindowTitle" xml:space="preserve">
+    <value>FPS Aim Trainer</value>
+  </data>
+  <data name="TrainingConfig" xml:space="preserve">
+    <value>Training Configuration</value>
+  </data>
+  <data name="IconType" xml:space="preserve">
+    <value>Icon Type:</value>
+  </data>
+  <data name="RecycleBin" xml:space="preserve">
+    <value>Recycle Bin</value>
+  </data>
+  <data name="NewFolder" xml:space="preserve">
+    <value>New Folder</value>
+  </data>
+  <data name="Excel" xml:space="preserve">
+    <value>Excel Document</value>
+  </data>
+  <data name="Word" xml:space="preserve">
+    <value>Word Document</value>
+  </data>
+  <data name="TextDocument" xml:space="preserve">
+    <value>Text Document</value>
+  </data>
+  <data name="TrainingMode" xml:space="preserve">
+    <value>Training Mode:</value>
+  </data>
+  <data name="CountMode" xml:space="preserve">
+    <value>Count Mode</value>
+  </data>
+  <data name="TimeMode" xml:space="preserve">
+    <value>Time Mode</value>
+  </data>
+  <data name="TargetHitCount" xml:space="preserve">
+    <value>Target Hit Count:</value>
+  </data>
+  <data name="TotalDuration" xml:space="preserve">
+    <value>Total Duration (seconds):</value>
+  </data>
+  <data name="TargetStayTime" xml:space="preserve">
+    <value>Target Stay Time (ms):</value>
+  </data>
+  <data name="StartTraining" xml:space="preserve">
+    <value>Start Training</value>
+  </data>
+  <data name="TrainingStats" xml:space="preserve">
+    <value>Training Statistics</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>No training data</value>
+  </data>
+  <data name="Hotkeys" xml:space="preserve">
+    <value>Hotkeys: ESC-Stop  F7-Quick Start  F6-View Results</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="Chinese" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Hits" xml:space="preserve">
+    <value>Hits:</value>
+  </data>
+  <data name="Misses" xml:space="preserve">
+    <value>Misses:</value>
+  </data>
+  <data name="HitRate" xml:space="preserve">
+    <value>Hit Rate:</value>
+  </data>
+  <data name="TotalTime" xml:space="preserve">
+    <value>Total Time:</value>
+  </data>
+  <data name="AverageTime" xml:space="preserve">
+    <value>Average Time per Target:</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>seconds</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="InvalidInput" xml:space="preserve">
+    <value>Please check if the input parameters are valid</value>
+  </data>
+</root>
+
